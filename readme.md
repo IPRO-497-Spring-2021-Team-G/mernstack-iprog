@@ -6,8 +6,8 @@ Link to the site: https://ipro-497-spring-2021-team-g.github.io/App/
 
 ## Team G
 
-* **Zhuohui Deng** - Senior, CS
-* **Yifan Huang** - Junior, CS
+* **Zhuohui Deng**     - Senior, CS
+* **Yifan Huang**      - Junior, CS
 * **Yulia Thonippara** - Senior, ITM
 
 ## Problem Statements
