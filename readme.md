@@ -4,6 +4,8 @@ This is a repository for an IPRO 497 project. For this project we are developing
 
 Link to the site: https://ipro-497-spring-2021-team-g.github.io/App/
 
+This is a test edition.
+
 ## Team G
 
 * **Zhuohui Deng**     - Senior, CS
