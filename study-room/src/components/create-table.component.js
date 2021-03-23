@@ -6,10 +6,14 @@ export default class CreateTable extends Component {
     super(props);
 
     this.onChangeTablename = this.onChangeTablename.bind(this);
+    this.onChangeCapacity = this.onChangeCapacity.bind(this);
+    this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
-      tableName: ''
+      tableName: '',
+      capacity:0,
+      description:''
     }
   }
 
@@ -19,11 +23,25 @@ export default class CreateTable extends Component {
     })
   }
 
+  onChangeCapacity(e) {
+    this.setState({
+      capacity: e.target.value
+    })
+  }
+
+  onChangeDescription(e) {
+    this.setState({
+      description: e.target.value
+    })
+  }
+
   onSubmit(e) {
     e.preventDefault();
 
     const table = {
-      tableName: this.state.tableName
+      tableName: this.state.tableName,
+      capacity: this.state.capacity,
+      description: this.state.description
     }
 
     console.log(table);
@@ -32,7 +50,9 @@ export default class CreateTable extends Component {
       .then(res => console.log(res.data));
 
     this.setState({
-      tableName: ''
+      tableName: '',
+      capacity:0,
+      description:''
     })
   }
 
@@ -50,6 +70,27 @@ export default class CreateTable extends Component {
                 onChange={this.onChangeTablename}
                 />
           </div>
+
+          <div className="form-group"> 
+          <label>Capacity: </label>
+          <input  type="text"
+              required
+              className="form-control"
+              value={this.state.capacity}
+              onChange={this.onChangeCapacity}
+              />
+        </div>
+
+        <div className="form-group"> 
+          <label>Description: </label>
+          <input  type="text"
+              required
+              className="form-control"
+              value={this.state.description}
+              onChange={this.onChangeDescription}
+              />
+        </div>
+
           <div className="form-group">
             <input type="submit" value="Create Table" className="btn btn-primary" />
           </div>

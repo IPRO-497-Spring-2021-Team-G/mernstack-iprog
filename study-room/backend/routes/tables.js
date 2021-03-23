@@ -9,11 +9,23 @@ router.route('/').get((req, res) => {
 
 router.route('/add').post((req, res) => {
   const tableName = req.body.tableName;
+  const capacity = req.body.capacity;
+  const description = req.body.description;
 
-  const newTable = new Table({tableName});
+  const newTable = new Table({
+    tableName,
+    capacity,
+    description,
+  });
 
   newTable.save()
     .then(() => res.json('new table added'))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
+router.route('/:id').get((req, res) => {
+  Table.findById(req.params.id)
+    .then(table => res.json(table))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 

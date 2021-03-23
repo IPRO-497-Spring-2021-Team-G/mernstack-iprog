@@ -1,8 +1,10 @@
 const express = require('express');
 const cors = require('cors');
-
+const passport = require("passport");
 const mongoose = require('mongoose');
-
+const tablesRouter = require('./routes/tables');
+const usersRouter = require('./routes/users');
+const adminRouter = require("./routes/admins");
 require('dotenv').config();
 
 const app = express();
@@ -19,13 +21,12 @@ const connection = mongoose.connection;
 connection.once('open', () => {
   console.log("MongoDB database connection established successfully");
 })
-
-const tablesRouter = require('./routes/tables');
-const usersRouter = require('./routes/users');
+app.use(passport.initialize());
+require("./config/passport")(passport);
 
 app.use('/tables', tablesRouter);
 app.use('/users', usersRouter);
-
+app.use("/admins", adminRouter);
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
 }); 

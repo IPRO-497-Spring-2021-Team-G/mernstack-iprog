@@ -10,6 +10,9 @@ export default class Navbar extends Component {
         <Link to="/" className="navbar-brand">Reserve</Link>
         <div className="collpase navbar-collapse">
         <ul className="navbar-nav mr-auto">
+        <li className="navbar-item">
+          <Link to="/view" className="nav-link">View Tables</Link>
+          </li>          
           
           <li className="navbar-item">
           <Link to="/create" className="nav-link">Create Tables</Link>
