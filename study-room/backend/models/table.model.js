@@ -9,6 +9,8 @@ const tableSchema = new Schema({
     unique: true,
     trim: true,
   },
+  capacity: { type: Number, required: true },
+  description: { type: String, required: true },
 }, {
   timestamps: true,
 });

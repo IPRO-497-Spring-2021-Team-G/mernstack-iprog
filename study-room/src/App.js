@@ -8,6 +8,8 @@ import Navbar from "./components/navbar.component"
 import TablesList from "./components/tables-list.component";
 import CreateTable from "./components/create-table.component";
 import ReserveTable from "./components/reserve.component";
+import TableView from "./components/tableView";
+import SpecificRoom from "./components/specificRoom";
 
 function App() {
   return (
@@ -15,8 +17,10 @@ function App() {
       <Navbar />
       <br/>
       <Route path="/" exact component={ReserveTable} />
+      <Route path="/view" exact component={TableView} />
       <Route path="/create" component={CreateTable} />
       <Route path="/history" component={TablesList} />
+      <Route path="/reserve" component={SpecificRoom} />
     </Router>
   );
 }
