@@ -11,7 +11,9 @@ const tableSchema = new Schema({
   },
   capacity: { type: Number, required: true },
   description: { type: String, required: true },
-}, {
+  isempty: { type: String, required: true },
+}, 
+{
   timestamps: true,
 });
 
