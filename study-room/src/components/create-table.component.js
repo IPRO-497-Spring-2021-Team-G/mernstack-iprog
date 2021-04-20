@@ -8,12 +8,14 @@ export default class CreateTable extends Component {
     this.onChangeTablename = this.onChangeTablename.bind(this);
     this.onChangeCapacity = this.onChangeCapacity.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
+    this.onChangeIsEmpty = this.onChangeIsEmpty.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
       tableName: '',
       capacity:0,
-      description:''
+      description:'',
+      isempty:'True'
     }
   }
 
@@ -34,14 +36,19 @@ export default class CreateTable extends Component {
       description: e.target.value
     })
   }
-
+  onChangeIsEmpty(e) {
+    this.setState({
+      isempty: e.target.value
+    })
+  }
   onSubmit(e) {
     e.preventDefault();
 
     const table = {
       tableName: this.state.tableName,
       capacity: this.state.capacity,
-      description: this.state.description
+      description: this.state.description,
+      isempty:this.state.isempty
     }
 
     console.log(table);
@@ -52,7 +59,8 @@ export default class CreateTable extends Component {
     this.setState({
       tableName: '',
       capacity:0,
-      description:''
+      description:'',
+      isempty:'True'
     })
   }
 
@@ -88,6 +96,16 @@ export default class CreateTable extends Component {
               className="form-control"
               value={this.state.description}
               onChange={this.onChangeDescription}
+              />
+        </div>
+
+        <div className="form-group"> 
+          <label>Available: </label>
+          <input  type="text"
+              required
+              className="form-control"
+              value={this.state.isempty}
+              onChange={this.onChangeIsEmpty}
               />
         </div>
 

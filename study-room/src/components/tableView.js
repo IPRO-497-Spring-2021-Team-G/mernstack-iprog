@@ -8,6 +8,7 @@ const ViewTable = props => (
     <td>{props.table.tableName}</td>
     <td>{props.table.capacity}</td>
     <td>{props.table.description}</td>
+    <td>{props.table.isempty}</td>
     <td>
     <Link to={"/reserve/"+props.table._id}>Reserve</Link> 
     </td>
@@ -56,11 +57,12 @@ export default class TableViewer extends Component {
             </div>
 
 <table className="table">
-          <thead className="thead-light">
+          <thead className="thead-dark">
             <tr>
               <th>table name</th>
               <th>capacity</th>
               <th>Description</th>
+              <th>Available</th>
               <th>Reserve</th>
             </tr>
           </thead>

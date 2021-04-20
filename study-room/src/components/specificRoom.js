@@ -32,6 +32,7 @@ export default class ReserveTable extends Component {
         if (response.data.length > 0) {
           this.setState({
             //tables: response.data.map(table => table.tableName),
+           // tableName: this.props.match.params,
             tableName: response.data[0].tableName,
             capacity: response.data[0].capacity,
             description:response.data[0].description
@@ -79,11 +80,17 @@ export default class ReserveTable extends Component {
       date: this.state.date
     }
 
+    const table={
+      isempty:"False"
+    }
     console.log(user);
 
     axios.post('http://localhost:5000/users/add', user)
       .then(res => console.log(res.data));
 
+      axios.post('http://localhost:5000/tables/update/607f4dcdf78f562ab0a4ce37', table)
+      .then(res => console.log(res.data));
+    
     window.location = '/';
   }
 
