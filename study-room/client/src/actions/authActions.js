@@ -1,68 +1,116 @@
-import axios from "axios";
-import setAuthToken from "../utils/setAuthToken";
-import jwt_decode from "jwt-decode";
+import axios from 'axios';
+import { returnErrors } from './errorActions';
 
-import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from "./types";
+import {
+    USER_LOADING,
+    USER_LOADED,
+    AUTH_ERROR,
+    LOGIN_SUCCESS, 
+    LOGIN_FAIL,
+    LOGOUT_SUCCESS,
+    REGISTER_SUCCESS,
+    REGISTER_FAIL 
+} from "./types";
+
+// Check token & load user
+// Call dispatch for asyc request
+export const loadUser = () => (dispatch, getState) => {
+    // User loading
+    dispatch({ type: USER_LOADING });
+
+    axios.get('/api/auth/admins', tokenConfig(getState))
+        .then(res => dispatch({
+            type: USER_LOADED,
+            // res.data is an object with a token and a user oject
+            payload: res.data
+        }))
+        .catch(err => {
+            // Retuen object with msg, status, id
+            dispatch(returnErrors(err.response.data, err.response.status));
+            dispatch({
+                // run any errors through errorReducer
+                type: AUTH_ERROR
+            });
+        });
+};
 
 // Register User
-export const registerUser = (userData, history) => dispatch => {
-  axios
-    .post("/admins/register", userData)
-    .then(res => history.push("/login"))
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
-};
+// de-structure
+export const register = ({ name, email, password }) => dispatch => {
+    // Add header value of content type
+    const config = {
+        headers: {
+            'Content-type': 'application/json',
+        }
+    }
 
-// Login - get user token
-export const loginUser = userData => dispatch => {
-  axios
-    .post("/admins/login", userData)
-    .then(res => {
-      // Save to localStorage
+    // Request body
+    // Take JavaScript object and pass it to JSON
+    const body = JSON.stringify({ name, email, password });
 
-      // Set token to localStorage
-      const { token } = res.data;
-      localStorage.setItem("jwtToken", token);
-      // Set token to Auth header
-      setAuthToken(token);
-      // Decode token to get user data
-      const decoded = jwt_decode(token);
-      // Set current user
-      dispatch(setCurrentUser(decoded));
-    })
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
-};
+    axios.post('api/admins', body, config)
+        .then(res => dispatch({
+            type: REGISTER_SUCCESS,
+            payload: res.data
+        }))
+        .catch(err => {
+            dispatch(returnErrors(err.response.data, err.response.status, 'REGISTER_FAIL'));
+            dispatch({
+                type: REGISTER_FAIL
+            });
+        });
+}
 
-// Set logged in user
-export const setCurrentUser = decoded => {
-  return {
-    type: SET_CURRENT_USER,
-    payload: decoded
-  };
-};
+// Login User
+export const login = ({ email, password }) => dispatch => {
+    // Add header value of content type
+    const config = {
+        headers: {
+            'Content-type': 'application/json',
+        }
+    }
 
-// User loading
-export const setUserLoading = () => {
-  return {
-    type: USER_LOADING
-  };
-};
+    // Request body
+    // Take JavaScript object and pass it to JSON
+    const body = JSON.stringify({ email, password });
 
-// Log user out
-export const logoutUser = () => dispatch => {
-  // Remove token from local storage
-  localStorage.removeItem("jwtToken");
-  // Remove auth header for future requests
-  setAuthToken(false);
-  // Set current user to empty object {} which will set isAuthenticated to false
-  dispatch(setCurrentUser({}));
-};
+    axios.post('api/auth', body, config)
+        .then(res => dispatch({
+            type: LOGIN_SUCCESS,
+            payload: res.data
+        }))
+        .catch(err => {
+            dispatch(returnErrors(err.response.data, err.response.status, 'LOGIN_FAIL'));
+            dispatch({
+                type: LOGIN_FAIL
+            });
+        });
+}
+
+// Logout User
+export const logout = () => {
+    return {
+        type: LOGOUT_SUCCESS
+    }
+}
+
+// Helper function: set up config/headers and token
+export const tokenConfig = getState => {
+    // Get token from localStorage
+    const token = getState().auth.token;
+
+    // Add token to headers by setting an object
+    const config = {
+        headers: {
+            "Content-type": "application/json"
+        }
+    }
+
+    // Check the token: if token, then add to headers
+    if (token) {
+        // Set x-auth-token to token from local storage
+        config.headers['x-auth-token'] =  token;
+    }
+
+    return config;
+}
