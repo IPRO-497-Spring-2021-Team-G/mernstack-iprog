@@ -1,32 +1,49 @@
 const express = require('express');
-const cors = require('cors');
-const passport = require("passport");
 const mongoose = require('mongoose');
+const path = require('path');
+const config = require('config');
+
 const tablesRouter = require('./routes/tables');
 const usersRouter = require('./routes/users');
 const adminRouter = require("./routes/admins");
 require('dotenv').config();
 
 const app = express();
-const port = process.env.PORT || 5000;
 
-app.use(cors());
 app.use(express.json());
 
-
 const uri = process.env.ATLAS_URI;
-mongoose.connect(uri, {useUnifiedTopology: true ,useNewUrlParser: true , useCreateIndex: true}
-);
-const connection = mongoose.connection;
-connection.once('open', () => {
-  console.log("MongoDB database connection established successfully");
-})
-app.use(passport.initialize());
-require("./config/passport")(passport);
+mongoose
+  .connect(uri, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useCreateIndex: true
+  }
+) // Adding new Mongo URL parser
+.then(() => console.log('MongoDB connected ...'))
+.catch(err => console.log(err));
+
+// Use Routes: anything that goes into /api/items should refer to items var
+app.use('/api/admins', require('./routes/api/admins'));
+app.use('/api/auth', require('./routes/api/auth'));
 
 app.use('/tables', tablesRouter);
 app.use('/users', usersRouter);
 app.use("/admins", adminRouter);
-app.listen(port, () => {
-    console.log(`Server is running on port: ${port}`);
-}); 
+
+// Serve static assets if in production and not hitting api/items
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res) => {
+    // Use node.js path module to load index.html file
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+
+}
+
+// Set up potential connection to Heroku: PaaS platform
+const port =  process.env.PORT || 5000;
+
+app.listen(port, () => console.log(`Server started on port ${port}`));
