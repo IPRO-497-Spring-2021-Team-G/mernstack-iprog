@@ -3,9 +3,6 @@ const mongoose = require('mongoose');
 const path = require('path');
 const config = require('config');
 
-const tablesRouter = require('./routes/tables');
-const usersRouter = require('./routes/users');
-const adminRouter = require("./routes/admins");
 require('dotenv').config();
 
 const app = express();
@@ -27,9 +24,9 @@ mongoose
 app.use('/api/admins', require('./routes/api/admins'));
 app.use('/api/auth', require('./routes/api/auth'));
 
-app.use('/tables', tablesRouter);
-app.use('/users', usersRouter);
-app.use("/admins", adminRouter);
+app.use('/tables', require('./routes/tables'));
+app.use('/users', require('./routes/users'));
+app.use("/admins", require("./routes/admins"));
 
 // Serve static assets if in production and not hitting api/items
 if (process.env.NODE_ENV === 'production') {
