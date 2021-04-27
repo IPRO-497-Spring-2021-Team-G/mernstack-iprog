@@ -1,58 +1,41 @@
-//import logo from './logo.svg';
-//import './App.css';
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
-import store from "./store";
-import { Provider } from "react-redux";
-import Navbar from "./components/navbar.component"
+import React, { Component } from 'react';
+import Navbar from "./components/navbar.component";
+
+import { Container } from 'reactstrap';
+
+// Integrate store.js into application
+import { Provider } from 'react-redux';
+import store from './store';
+import { loadUser } from './actions/authActions';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
+
 import TablesList from "./components/tables-list.component";
 import CreateTable from "./components/create-table.component";
 import ReserveTable from "./components/reserve.component";
 import TableView from "./components/tableView";
 import SpecificRoom from "./components/specificRoom";
 
-
-import jwt_decode from "jwt-decode";
-import setAuthToken from "./utils/setAuthToken";
-import { setCurrentUser, logoutUser } from "./actions/authActions";
-import Register from "./components/auth/Register";
-import Login from "./components/auth/Login";
-import PrivateRoute from "./components/private-route/PrivateRoute";
-if (localStorage.jwtToken) {
-  // Set auth token header auth
-  const token = localStorage.jwtToken;
-  setAuthToken(token);
-  // Decode token and get user info and exp
-  const decoded = jwt_decode(token);
-  // Set user and isAuthenticated
-  store.dispatch(setCurrentUser(decoded));
-  // Check for expired token
-  const currentTime = Date.now() / 1000; // to get in milliseconds
-  if (decoded.exp < currentTime) {
-    // Logout user
-    store.dispatch(logoutUser());
-
-    // Redirect to login
-    window.location.href = "./login";
+class App extends Component {
+  // User will be loaded when the app loads
+  componentDidMount() {
+    store.dispatch(loadUser());
   }
-}
-function App() {
-  return (
-    <Provider store={store}>
-    <Router>
-      <Navbar />
-      <br/>
-      <Route path="/" exact component={ReserveTable} />
-      <Route path="/view" exact component={TableView} />
-      <Route path="/create" component={CreateTable} />
-      <Route  path="/history" component={TablesList} />
-      <Route path="/reserve" component={SpecificRoom} />
-      <Route exact path="/register" component={Register} />
-            <Route exact path="/login" component={Login} />
-    </Router>
-    </Provider>
-  );
+  
+  render() {
+    return (
+      // Wrap everything in a Provider, share state throughout components
+      <Provider store={store}>
+        <div className="App">
+          <Navbar />
+          <Container>
+           
+          </Container>
+        </div>
+      </Provider>
+    );
+  }
 }
 
 export default App;
