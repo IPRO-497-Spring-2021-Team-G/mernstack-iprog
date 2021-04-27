@@ -30,7 +30,11 @@ class App extends Component {
         <div className="App">
           <Navbar />
           <Container>
-           
+            <ReserveTable />
+            <TableView />
+            <CreateTable />
+            <TablesList />
+            <SpecificRoom />
           </Container>
         </div>
       </Provider>
