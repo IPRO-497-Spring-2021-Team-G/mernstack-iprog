@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Navbar from "./components/navbar.component";
+import AppNavbar from "./components/navbar.component";
 
 import { Container } from 'reactstrap';
 
@@ -28,7 +28,7 @@ class App extends Component {
       // Wrap everything in a Provider, share state throughout components
       <Provider store={store}>
         <div className="App">
-          <Navbar />
+          <AppNavbar />
           <Container>
             <ReserveTable />
             <TableView />

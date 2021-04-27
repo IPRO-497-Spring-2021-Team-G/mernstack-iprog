@@ -16,9 +16,8 @@ import RegisterModal from './auth/RegisterModal';
 import LoginModal from './auth/LoginModal';
 import Logout from './auth/Logout';
 import { ReactReduxContext } from 'react-redux';
-import { Link } from 'react-router-dom';
 
-export default class Navbar extends Component {
+class AppNavbar extends Component {
   state = {
     isOpen: false
   }
@@ -95,4 +94,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps, null)(Navbar);
+export default connect(mapStateToProps, null)(AppNavbar);
