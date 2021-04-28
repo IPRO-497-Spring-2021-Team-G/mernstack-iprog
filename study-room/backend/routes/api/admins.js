@@ -24,7 +24,7 @@ router.post('/', (req, res) => {
     }
     
     // Check for existing user
-    User.findOne({ email: email })
+    Admin.findOne({ email: email })
         // Sync away??
         .then(admin => {
             if(admin) {
