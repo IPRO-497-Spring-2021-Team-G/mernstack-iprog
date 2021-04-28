@@ -23,10 +23,8 @@ mongoose
 // Use Routes: anything that goes into /api/items should refer to items var
 app.use('/api/admins', require('./routes/api/admins'));
 app.use('/api/auth', require('./routes/api/auth'));
-
-app.use('/tables', require('./routes/tables'));
-app.use('/users', require('./routes/users'));
-app.use("/admins", require("./routes/admins"));
+app.use('/api/tables', require('./routes/api//tables'));
+app.use('/api/users', require('./routes/api/users'));
 
 // Serve static assets if in production and not hitting api/items
 if (process.env.NODE_ENV === 'production') {

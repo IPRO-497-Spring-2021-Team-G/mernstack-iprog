@@ -1,6 +1,6 @@
 // Use express router
 const express = require('express');
-const Admin = require('../../models/admin.model');
+const Admin = require('../../models/Admin');
 // Set router var to express.Router
 const router = express.Router();
 const bcrypt = require('bcryptjs');
@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken');
 const auth = require('../../middleware/auth');
 
 // Bring in Item model from the models folder
-const Item = require ('../../models/admin.model');
+const Item = require ('../../models/Admin');
 
 // @route   POST api/auth
 // @desc    Authenticate an Admin

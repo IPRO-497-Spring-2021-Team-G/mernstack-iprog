@@ -1,4 +1,10 @@
 // Constants that are set to strings
+// Action items for everything you do in your application
+export const GET_TABLES = 'GET_TABLES';
+export const ADD_TABLE = 'ADD_TABLES';
+export const DELETE_TABLE = 'DELETE_TABLE';
+export const TABLES_LOADING = 'TABLES_LOADING';
+
 // Action items for authentication and login
 export const USER_LOADING = 'USER_LOADING';
 export const USER_LOADED = 'USER_LOADED';
