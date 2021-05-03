@@ -15,7 +15,7 @@ export default class CreateTable extends Component {
       tableName: '',
       capacity:0,
       description:'',
-      isempty:'True'
+      isEmpty:'True'
     }
   }
 
