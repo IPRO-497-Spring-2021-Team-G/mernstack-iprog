@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import AppNavbar from "./components/navbar.component";
 
 import { Container } from 'reactstrap';
 import Header from './components/Header'
 import Footer from './components/Footer'
 import HomeScreen from './screens/HomeScreen'
+import TableScreen from './screens/TableScreen'
 
 // Integrate store.js into application
 import { Provider } from 'react-redux';
@@ -30,10 +32,12 @@ class App extends Component {
     return (
       // Wrap everything in a Provider, share state throughout components
       <Provider store={store}>
+        <Router>
         <AppNavbar />
         <main className="App">
           <Container>
-          <HomeScreen />
+          <Route path='/' component={HomeScreen} exact />
+          <Route path='/table/:id' component={TableScreen} />
             <ReserveTable />
             <TableView />
             <CreateTable />
@@ -42,6 +46,7 @@ class App extends Component {
           </Container>
         </main>
         <Footer />
+        </Router>
       </Provider>
     );
   }

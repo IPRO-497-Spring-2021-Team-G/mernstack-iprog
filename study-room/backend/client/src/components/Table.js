@@ -1,16 +1,17 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { Card } from 'react-bootstrap'
 
 const Table = ({ table }) => {
     return (
         <Card className='my-3 p-3 rounded'>
-            <a href={`/table/${table._id}`}>
+            <Link to={`/table/${table._id}`}>
                 <Card.Img src={table.image} variant='top' />
-            </a>
+            </Link>
             <Card.Body>
-            <a href={`/table/${table._id}`}>
+            <Link to={`/table/${table._id}`}>
                 <Card.Title as='div'><strong>{table.name}</strong></Card.Title>
-            </a>
+            </Link>
             <Card.Text as='div'>
                 <div className='my-3'>
                     <strong>Capacity: </strong>{table.capacity}
