@@ -45,8 +45,13 @@ function App() {
       <br/>
       <Route path="/" exact component={ReserveTable} />
       <Route path="/view" exact component={TableView} />
-      <Route path="/create" component={CreateTable} />
-      <Route  path="/history" component={TablesList} />
+     
+      <Switch>
+              <PrivateRoute exact path="/create" component={CreateTable} />
+            </Switch>
+      <Switch>
+              <PrivateRoute exact path="/history" component={TablesList} />
+            </Switch>
       <Route path="/reserve" component={SpecificRoom} />
       <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />

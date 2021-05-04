@@ -71,12 +71,17 @@ export default class ReserveTable extends Component {
       duration: this.state.duration,
       date: this.state.date
     }
+    const table={
+      isempty:"False"
+    }
 
     console.log(user);
 
     axios.post('http://localhost:5000/users/add', user)
       .then(res => console.log(res.data));
 
+      axios.post('http://localhost:5000/tables/update/607f4dcdf78f562ab0a4ce37', table)
+      .then(res => console.log(res.data));
     window.location = '/';
   }
 
