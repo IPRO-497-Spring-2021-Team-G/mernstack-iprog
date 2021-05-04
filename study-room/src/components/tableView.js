@@ -2,7 +2,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
-
+import Button from 'react-bootstrap/Button'
+import { CardDeck } from 'reactstrap';
+import { Card } from 'react-bootstrap'
 const ViewTable = props => (
   <tr>
     <td>{props.table.tableName}</td>
@@ -14,6 +16,30 @@ const ViewTable = props => (
     </td>
   </tr>
 )
+
+
+const CardView = props => {
+  return (
+      <Card style={{ width: '27rem' }}>
+      <Card.Img variant="top" src="https://arch.iit.edu/img/66ceb0c9ea37d546/dsc-3561.jpg" alt="pic1" />
+      <Card.Body>
+        <Card.Title>{props.table.tableName}</Card.Title>
+        <Card.Text>
+        Capacity: {props.table.capacity}
+        </Card.Text>
+        <Card.Text>
+  Location:   {props.table.description}
+  </Card.Text>
+  <Card.Text>
+    Availability:{props.table.isempty}
+          </Card.Text>
+          <button type="button" class="btn btn-dark">  <Link to={"/reserve/"+props.table._id}>Reserve</Link> </button>
+    
+      </Card.Body>
+    </Card>
+  )
+}
+
 
 export default class TableViewer extends Component {
   constructor(props) {
@@ -42,35 +68,20 @@ export default class TableViewer extends Component {
     })
   }
 
+  CardList(){
+    return this.state.tables.map(currenttable => {
+      return <CardView table={currenttable} />;
+    })
+    
+  }
 
   render() {
     return (
-        <div>
-        <h3>Find your table</h3>
-        <div class="card" style={{width:"18rem"}}>
-        <img class="card-img-top" src="https://arch.iit.edu/img/66ceb0c9ea37d546/dsc-3561.jpg" alt="pic1"/>
-        <div class="card-body">
-        <h5 class="card-title">Table A</h5>
-        <p class="card-text">Description</p>
-        <a href="/#" class="btn btn-primary">Reserve</a>
-            </div>
-            </div>
+      
+      <CardDeck> 
+  { this.CardList() }
 
-<table className="table">
-          <thead className="thead-dark">
-            <tr>
-              <th>table name</th>
-              <th>capacity</th>
-              <th>Description</th>
-              <th>Available</th>
-              <th>Reserve</th>
-            </tr>
-          </thead>
-          <tbody>
-            { this.tableList() }
-          </tbody>
-        </table>
-      </div>
+  </CardDeck> 
     )
   }
 }
