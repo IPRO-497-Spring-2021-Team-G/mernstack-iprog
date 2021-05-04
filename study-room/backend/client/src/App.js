@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import AppNavbar from "./components/navbar.component";
 
 import { Container } from 'reactstrap';
+import Header from './components/Header'
+import Footer from './components/Footer'
 
 // Integrate store.js into application
 import { Provider } from 'react-redux';
@@ -27,7 +29,7 @@ class App extends Component {
     return (
       // Wrap everything in a Provider, share state throughout components
       <Provider store={store}>
-        <div className="App">
+        <main className="App">
           <AppNavbar />
           <Container>
             <ReserveTable />
@@ -36,7 +38,8 @@ class App extends Component {
             <TablesList />
             <SpecificRoom />
           </Container>
-        </div>
+        </main>
+        <Footer />
       </Provider>
     );
   }
