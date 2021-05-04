@@ -4,6 +4,7 @@ import AppNavbar from "./components/navbar.component";
 import { Container } from 'reactstrap';
 import Header from './components/Header'
 import Footer from './components/Footer'
+import HomeScreen from './screens/HomeScreen'
 
 // Integrate store.js into application
 import { Provider } from 'react-redux';
@@ -29,9 +30,10 @@ class App extends Component {
     return (
       // Wrap everything in a Provider, share state throughout components
       <Provider store={store}>
+        <AppNavbar />
         <main className="App">
-          <AppNavbar />
           <Container>
+          <HomeScreen />
             <ReserveTable />
             <TableView />
             <CreateTable />
